@@ -34,7 +34,7 @@ ntp server 10.10.34.1
 ip default-gateway 10.34.99.254
 
 !GENERATE SSH CRYPTO
-ip domain-name NET2000.com
+ip domain-name lab.com
 username cisco secret cisco
 line vty 0 4
 transport input ssh
