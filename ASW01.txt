@@ -145,6 +145,7 @@ description RESERVED_FOR_FUTURE_USE
 switchport mode access 
 switchport access vlan 999
 shut
+
 int range f0/21-22
 description RESERVED_FOR_TRUNKS
 switchport mode access 
