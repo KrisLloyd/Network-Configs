@@ -89,24 +89,28 @@ ip addr 10.34.99.1 255.255.255.0
 ipv6 addr 2001:face:be34:99::1/64
 no ip proxy-arp
 no shut
+
 int vlan 10
 ipv6 enable
 ip addr 10.34.10.1 255.255.255.0
 ipv6 addr 2001:face:be34:10::1/64
 no ip proxy-arp
 no shut
+
 int vlan 20
 ipv6 enable
 ip addr 10.34.20.1 255.255.255.0
 ipv6 addr 2001:face:be34:20::1/64
 no ip proxy-arp
 no shut
+
 int vlan 30
 ipv6 enable
 ip addr 10.34.30.1 255.255.255.0
 ipv6 addr 2001:face:be34:30::1/64
 no ip proxy-arp
 no shut
+
 int f0/24
 description TRUNK_TO_DSW01
 switchport mode trunk
@@ -115,6 +119,7 @@ switchport trunk native vlan 66
 switchport trunk allowed vlan except 999
 ip dhcp snooping trust
 no shut
+
 int f0/23
 description TRUNK_TO_ASW02
 switchport mode trunk
@@ -122,16 +127,19 @@ switchport nonegotiate
 switchport trunk native vlan 66
 switchport trunk allowed vlan 10,20,30,99
 no shut
+
 int range f0/1-8
 description SERVERS
 switchport mode access 
 switchport access vlan 20
 no shut
+
 int range f0/9-18
 description OFFICE
 switchport mode access 
 switchport access vlan 30
 no shut
+
 int range f0/19-20
 description RESERVED_FOR_FUTURE_USE
 switchport mode access 
