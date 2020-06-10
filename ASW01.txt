@@ -125,7 +125,7 @@ description TRUNK_TO_ASW02
 switchport mode trunk
 switchport nonegotiate
 switchport trunk native vlan 66
-switchport trunk allowed vlan 10,20,30,99
+switchport trunk allowed vlan except 999
 no shut
 
 int range f0/1-8
