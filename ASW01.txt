@@ -29,34 +29,24 @@ login
 logging sync
 exec-timeout 15 0
 no ip domain-lookup
-service password-encryption
 ntp server 10.10.34.1
 ip default-gateway 10.34.99.254
 
 !GENERATE SSH CRYPTO
 ip domain-name lab.com
-username cisco secret cisco
+username cisco privilege 15 algorithm-type scrypt secret cisco
 line vty 0 4
 transport input ssh
 login local
 crypto key generate rsa
 1024
+service password-encryption
 
-!CONFIGURE VLANS
-vlan 99
-name MANAGEMENT
-vlan 10
-name SERVERS
-vlan 20
-name OFFICE
-vlan 30
-name GUEST
-vlan 66
-name NATIVE
-vlan 999
-name UNUSED
-exit
-do show vlan
+!CONFIGURE VTP
+vtp domain LAB
+vtp version 3
+vtp mode client
+vtp password cisco
 
 
 !SHUT DOWN UNUSED PORTS
@@ -71,7 +61,6 @@ shut
 exit
 
 
-
 !CONFIGURE INTERFACE SECURITY
 ip dhcp snooping vlan 10,20,30,99
 int range f0/1-18
@@ -79,7 +68,6 @@ switchport port-security maximum 2
 switchport port-security violation protect
 switchport port-security mac-address sticky
 no ip dhcp snooping trust
-
 
 
 !CONFIGURE INTERFACES
