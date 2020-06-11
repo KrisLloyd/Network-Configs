@@ -1,0 +1,234 @@
+!FOR USE ON DSW01 ONLY
+
+!CONFIGURE DUAL-STACK
+en
+config t
+sdm prefer dual-ipv4-and-ipv6 default
+do reload
+y
+
+
+!CONFIRM DUAL STACK
+en
+conf t
+do show sdm prefer
+
+
+
+!CONFIGURE LOGGING
+hostname DSW01
+service timestamps log datetime msec
+logging 10.10.34.1
+ntp server 10.10.34.1
+
+
+!CONFIGURE BANNER & PASSWORDS
+enable secret cisco
+banner motd #
+*********** LAB ************
+** Authorized Access Only **
+****************************
+#
+line con 0
+password cisco
+login
+logging sync
+exec-timeout 15 0
+no ip domain-lookup
+ip routing
+ipv6 unicast-routing
+
+
+!GENERATE SSH CRYPTO
+ip domain-name lab.com
+username cisco privilege 15 algorithm-type scrypt secret cisco
+line vty 0 15
+transport input ssh
+login local
+crypto key generate rsa
+1024
+service password-encryption
+
+
+!CONFIGURE VLANS
+vlan 99
+name MANAGEMENT
+vlan 10
+name SERVERS
+vlan 20
+name OFFICE
+vlan 30
+name GUEST
+vlan 66
+name NATIVE
+vlan 999
+name UNUSED
+exit
+do show vlan
+
+
+
+!SHUT DOWN ALL INTERFACES
+int range f0/1-24
+switchport mode access 
+switchport access vlan 999
+shut
+int range g0/1-2
+switchport mode access 
+switchport access vlan 999
+shut
+exit
+
+!CONFIGURE VTP
+vtp domain LAB
+vtp version 3
+vtp mode server
+
+
+!CONFIGURE SPANNING TREE
+spanning-tree mode pvst
+spanning-tree vlan 99,10 root primary
+spanning-tree vlan 20,30 root secondary
+spanning-tree portfast default
+int f0/3
+spanning-tree portfast disable
+int f0/1
+spanning-tree portfast disable
+
+
+!CONFIGURE INTERFACES
+int vlan 99
+ipv6 enable
+ip address 10.34.99.253 255.255.255.0
+ipv6 address 2001:face:be34:99::fd/64
+no ip proxy-arp
+standby 99 ip 10.34.99.254
+standby 99 priority 110
+standby 99 preempt
+standby 99 authentication md5 key-string cisco
+standby 99 track g0/1 20
+no shut
+
+int vlan 10
+ipv6 enable
+ip address 10.34.10.253 255.255.255.0
+ipv6 address 2001:face:be34:10::fd/64
+no ip proxy-arp
+standby 10 ip 10.34.10.254
+standby 10 priority 110
+standby 10 preempt
+standby 10 authentication md5 key-string cisco
+standby 10 track g0/1 20
+no shut
+
+int vlan 20
+ipv6 enable
+ip address 10.34.20.253 255.255.255.0
+ipv6 address 2001:face:be34:20::fd/64
+ip helper-address 10.34.2.2
+ipv6 dhcp relay destination 2001:face:be34:2::1 f0/5
+ipv6 nd managed-config-flag
+no ip proxy-arp
+standby 20 ip 10.34.20.253
+standby 20 preempt
+standby 20 authentication md5 key-string cisco
+no shut
+
+int vlan 30
+ipv6 enable
+ip address 10.34.30.253 255.255.255.0
+ipv6 address 2001:face:be34:30::fd/64
+ip helper-address 10.34.2.2
+ipv6 dhcp relay destination 2001:face:be34:2::1 f0/5
+ipv6 nd managed-config-flag
+no ip proxy-arp
+standby 30 ip 10.34.30.253
+standby 30 preempt
+standby 30 authentication md5 key-string cisco
+no shut
+
+int loop0
+ipv6 enable
+ip addr 10.1.1.1 255.255.255.255
+ipv6 addr 2001:face:be34:1::1/128
+exit
+
+int range f0/23-24
+description ETHERCHANNEL_LINK_TO_DSW02
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport nonegotiate
+switchport trunk native vlan 66
+switchport trunk allowed except 999
+channel-group 10 mode active
+
+int po10
+description TRUNK_TO_DSW02
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport nonegotiate
+switchport trunk native vlan 66
+switchport trunk allowed except 999
+no shut
+int range f0/23-24
+no shut
+
+int range f0/21-2
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport nonegotiate
+switchport trunk native vlan 66
+switchport trunk allowed except 999
+no shut
+
+int f0/21
+description TRUNK_TO_ASW01
+int f0/22
+description TRUNK_TO_ASW02
+
+int f0/6
+switchport mode access 
+switchport access vlan 10
+no shut
+
+int f0/3
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport nonegotiate
+switchport trunk native vlan 66
+switchport trunk allowed vlan 10,20,30,99
+no shut
+
+int g0/1
+description TO_CORE
+no switchport
+ip addr 10.34.1.1 255.255.255.252
+no shut
+
+
+!CONFIGURE OSPF
+router ospf 1
+router-id 10.1.1.1
+exit
+ipv6 router ospf 1
+router-id 10.1.1.1
+exit
+
+int vlan 99
+ipv6 ospf 1 area 0
+int vlan 10
+ip ospf 1 area 0
+ipv6 ospf 1 area 0
+int vlan 20
+ip ospf 1 area 0
+ipv6 ospf 1 area 0
+int vlan 30
+ip ospf 1 area 0
+ipv6 ospf 1 area 0
+int loop0
+ipv6 ospf 1 area 0
+ip ospf 1 area 0
+int g0/1
+ip ospf 1 area 0
+ipv6 ospf 1 area 0
+exit
