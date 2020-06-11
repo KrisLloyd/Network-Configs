@@ -83,6 +83,7 @@ exit
 vtp domain LAB
 vtp version 3
 vtp mode server
+vtp password cisco
 
 
 !CONFIGURE SPANNING TREE
