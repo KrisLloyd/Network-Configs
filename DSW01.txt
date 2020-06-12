@@ -23,7 +23,7 @@ ntp server 10.10.34.1
 
 
 !CONFIGURE BANNER & PASSWORDS
-enable secret cisco
+enable algorithm-type scrypt secret cisco
 banner motd #
 *********** LAB ************
 ** Authorized Access Only **
