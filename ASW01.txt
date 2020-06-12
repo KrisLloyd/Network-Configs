@@ -110,7 +110,7 @@ ip dhcp snooping trust
 no shut
 
 int f0/23
-description TRUNK_TO_ASW02
+description TRUNK_TO_DSW02
 switchport mode trunk
 switchport nonegotiate
 switchport trunk native vlan 66
