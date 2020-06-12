@@ -61,6 +61,7 @@ A sample Enterprise Campus 3 Architecture focusing on key switching technologies
 DSW01 and DSW02 participate in the HSRP configuration.
 
 DSW01 will be the active router for Vlans 99 and 10, and standby router for Vlans 20 and 30.
+
 DSW02 will be the active router for Vlans 20 and 30, and standby router for Vlans 99 and 10.
 
 <pre>
