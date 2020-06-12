@@ -4,9 +4,8 @@ A sample Enterprise Campus 3 Architecture focusing on key switching technologies
 
 ## Network Topology
 
-> Network diagram is currently being worked on. Sorry about that!
+[![Campus Switch Topology](topology.png)]()
 
-![Campus Switch Topology](<topology.jpg>)
 
 ### Devices and Interfaces
 
