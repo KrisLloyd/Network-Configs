@@ -64,6 +64,7 @@ exit
 !CONFIGURE INTERFACE SECURITY
 ip dhcp snooping vlan 10,20,30,99
 int range f0/1-18
+switchport port-security
 switchport port-security maximum 2
 switchport port-security violation protect
 switchport port-security mac-address sticky
