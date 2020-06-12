@@ -42,6 +42,7 @@ crypto key generate rsa
 1024
 service password-encryption
 
+
 !CONFIGURE VTP
 vtp domain LAB
 vtp version 3
@@ -58,6 +59,13 @@ int range g0/1-2
 switchport mode access
 switchport access vlan 999
 shut
+exit
+
+
+!CONFIGURE SPANNING TREE
+spanning-tree mode rapid-pvst
+int range f0/1-18
+spanning-tree portfast
 exit
 
 
@@ -142,12 +150,6 @@ switchport access vlan 999
 shut
 exit
 
-
-!CONFIGURE PVST
-spanning-tree mode pvst
-int range f0/1-18
-spanning-tree portfast
-exit
 
 !CONFIRM CONFIG IS CORRECT
 do sh proto
