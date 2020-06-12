@@ -1,0 +1,80 @@
+!FOR USE ON RTR01 ONLY
+
+
+!CONFIGURE LOGGING
+hostname RTR01
+service timestamps log datetime msec
+logging 10.10.34.1
+ntp server 10.10.34.1
+
+
+!CONFIGURE BANNER & PASSWORDS
+enable algorithm-type scrypt secret cisco
+banner motd #
+*********** LAB ************
+** Authorized Access Only **
+****************************
+#
+line con 0
+password cisco
+login
+logging sync
+exec-timeout 15 0
+no ip domain-lookup
+ipv6 unicast-routing
+
+
+!GENERATE SSH CRYPTO
+ip domain-name lab.com
+username cisco privilege 15 algorithm-type scrypt secret cisco
+line vty 0 15
+transport input ssh
+login local
+crypto key generate rsa
+1024
+service password-encryption
+
+
+!SHUT DOWN ALL INTERFACES
+int range g0/0-2
+shut
+
+
+!CONFIGURE INTERFACES
+int g0/0
+description LINK_TO_DSW01
+ipv6 enable
+ip address 10.34.1.2 255.255.255.252
+no ip proxy-arp
+no shut
+
+int g0/1
+description LINK_TO_DSW02
+ipv6 enable
+ip address 10.34.1.6 255.255.255.252
+no ip proxy-arp
+no shut
+
+int loop0
+description WAN_INTERFACE
+ip address 1.1.1.1 255.255.255.255
+exit
+
+!CONFIGURE OSPF
+router ospf 1
+router-id 10.1.1.3
+exit
+ipv6 router ospf 1
+router-id 10.1.1.3
+exit
+
+int g0/0
+ip ospf 1 area 0
+ipv6 ospf 1 area 0
+int g0/1
+ip ospf 1 area 0
+ipv6 ospf 1 area 0
+int loop0
+ip ospf 1 area 0
+ipv6 ospf 1 area 0
+exit
