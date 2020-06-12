@@ -87,7 +87,7 @@ vtp password cisco
 
 
 !CONFIGURE SPANNING TREE
-spanning-tree mode pvst
+spanning-tree mode rapid-pvst
 spanning-tree vlan 99,10 root primary
 spanning-tree vlan 20,30 root secondary
 
