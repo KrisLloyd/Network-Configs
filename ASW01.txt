@@ -22,7 +22,7 @@ banner motd #
 ** Authorized Access Only **
 ****************************
 #
-enable secret cisco
+enable algorithm-type scrypt secret cisco
 line con 0
 password cisco
 login
