@@ -90,11 +90,6 @@ vtp password cisco
 spanning-tree mode pvst
 spanning-tree vlan 99,10 root primary
 spanning-tree vlan 20,30 root secondary
-spanning-tree portfast default
-int f0/3
-spanning-tree portfast disable
-int f0/1
-spanning-tree portfast disable
 
 
 !CONFIGURE INTERFACES
