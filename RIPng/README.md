@@ -33,7 +33,7 @@ A default route is placed on R2 and points towards R3 and is then propogated in 
 
 ### RIPng
 
-> This section is currently under construction. Sorry about that!
+#### R1
 
 The routing table on R1 shows the learned routes from R2. The entries are shown as 'R' to indicate the source of the route is from the RIP protocol.
 <pre>
@@ -100,7 +100,7 @@ RIP process "RIPNG" local RIB
     Serial0/0/0/FE80::2, expires in 161 sec
 </pre>
 
-
+#### R2
 
 Router R2 is shown below. The only learned route is the 2001:DB8:CAFE:1::/64 network attached to R1's G0/0 interface. Note that the S0/0/1 interface towards R3 is not participating in the routing protocol and no learned routes will be sent to or be received from that router.
 
@@ -169,7 +169,7 @@ RIP process "RIPNG" local RIB
     Serial0/0/0/FE80::1, expires in 176 sec
 </pre>
 
-
+#### R3
 
 Router R3 is not participating in the RIPng routing domain. The routing table and protocols are shown below:
 
