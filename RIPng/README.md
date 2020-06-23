@@ -1,6 +1,6 @@
-####
 [< Back to Network-Configs](https://github.com/KrisLloyd/Network-Configs/)
----
+***
+
 
 # Example RIPng Network
 
