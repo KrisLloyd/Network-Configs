@@ -1,0 +1,66 @@
+!FOR USE ON R1 ONLY
+
+
+!CONFIGURE LOGGING
+hostname R1
+service timestamps log datetime msec
+
+
+!CONFIGURE BANNER & PASSWORDS
+enable algorithm-type scrypt secret cisco
+banner motd #
+*********** LAB ************
+** Authorized Access Only **
+****************************
+#
+line con 0
+password cisco
+login
+logging sync
+exec-timeout 15 0
+no ip domain-lookup
+ipv6 unicast-routing
+
+
+!GENERATE SSH CRYPTO
+ip domain-name lab.com
+username cisco privilege 15 algorithm-type scrypt secret cisco
+line vty 0 15
+transport input ssh
+login local
+crypto key generate rsa
+1024
+service password-encryption
+
+
+!SHUT DOWN ALL INTERFACES
+int range g0/0-2
+shut
+int range s0/0/0-1
+shut
+
+
+!CONFIGURE INTERFACES
+int g0/0
+description SERVERS
+ipv6 address 2001:db8:cafe:1::1/64
+ipv6 address fe80::1/64 link-local
+no shut
+
+int s0/0/0
+description LINK_TO_R2
+ipv6 address 2001:db8:cafe:2::1/64
+ipv6 address fe80::1/64 link-local
+clock rate 128000
+no shut
+exit
+
+
+!CONFIGURE RIPNG
+ipv6 router rip RIPNG
+exit
+int g0/0
+ipv6 rip RIPNG enable
+int s0/0/0
+ipv6 rip RIPNG enable
+exit
