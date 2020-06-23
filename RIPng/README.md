@@ -1,3 +1,6 @@
+[< Back to Network-Configs](https://github.com/KrisLloyd/Network-Configs/)
+---
+
 # Example RIPng Network
 
 A sample RIPng network. Routers R1 and R2 are participating in the RIPng routing domain, R3 is not participating. All interfaces in R1 and R2 are included (except for the Serial 0/0/1 interface on R2 that links to R3) and their corresponfing networks should be present in the routing tables on those devices.
