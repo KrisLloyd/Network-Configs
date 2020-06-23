@@ -101,6 +101,6 @@ DSW01# show standby
 ```
 DSW01# show spanning-tree
 ```
-## Authors
+## Author
 
 * **Kristopher Lloyd** - [LinkedIn](https://www.linkedin.com/in/kris-lloyd)
