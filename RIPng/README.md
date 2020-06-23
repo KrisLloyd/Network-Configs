@@ -198,6 +198,6 @@ IPv6 Routing Protocol is "connected"
 IPv6 Routing Protocol is "ND"
 </pre>
 
-## Authors
+## Author
 
 * **Kristopher Lloyd** - [LinkedIn](https://www.linkedin.com/in/kris-lloyd)
