@@ -8,4 +8,6 @@ This folder contains sample network designs which highlight specific features in
 
 [RIPng](https://github.com/KrisLloyd/Network-Configs/tree/master/RIPng) - A basic look at RIPng configuration.
 
+[EIGRP with Load Balancing](https://github.com/KrisLloyd/Network-Configs/tree/master/EIGRP%20Load%Balancing) - A basic look at RIPng configuration.
+
 > More netowrks to come, stay tuned!
