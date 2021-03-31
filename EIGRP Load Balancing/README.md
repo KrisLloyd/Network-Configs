@@ -41,7 +41,6 @@ A sample EIGRP network with redundant links to leverage load balancing.
 
 ### EIGRP
 
-> This section is under construction. Sorry about that!
 
 The **show ip eigrp neighbors** command shows that the network has reached convergence and all routers have formed neighbour adjacencies with their neighbours.
 
