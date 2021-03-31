@@ -1,0 +1,49 @@
+en
+conf t
+hostname R1
+no ip domain-lookup
+
+! USERNAMES AND PASSWORDS
+enable algorithm-type scrypt secret cisco
+username cisco privilege 15 algorithm-type scrypt secret cisco
+service password-encryption
+
+
+! LINE CONFIGURATION
+line con 0
+exec-tim 0 0
+line vty 0 4
+login local
+transport input ssh
+exit
+
+! SSH CONFIGURATION
+ip domain-name cisco.com
+ip ssh version 2
+crypto key generate rsa modulus 2048
+
+
+! INTERFACE CONFIGURATION
+int l11
+ip addr 10.10.1.1 255.255.255.255
+int l12
+ip addr 10.10.1.2 255.255.255.255
+int l13
+ip addr 10.10.1.3 255.255.255.255
+
+int g0/0/0
+ip addr 10.1.2.1 255.255.255.0
+no shut
+int g0/0/1
+ip addr 10.1.3.1 255.255.255.0
+no shut
+
+! EIGRP CONFIGURATION
+router eigrp 100
+network 10.0.0.0
+variance 2
+
+
+! BANDWIDTH
+int g0/0/0
+bandwidth 500000
