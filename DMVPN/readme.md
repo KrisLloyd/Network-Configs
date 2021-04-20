@@ -77,14 +77,14 @@ With the basics configured, the default VRF which will be used by the private ne
 Hub(config) #interface Tunnel100
 Hub(config-if) #ip address 10.0.0.100 255.255.255.0
 Hub(config-if) #ip nhrp authentication cisco
- ip nhrp map multicast dynamic
- ip nhrp network-id 10
- ip nhrp holdtime 60
- ip nhrp registration timeout 10
- tunnel source GigabitEthernet0/0
- tunnel mode gre multipoint
- tunnel key 1
- tunnel vrf underlay
+Hub(config-if) #ip nhrp map multicast dynamic
+Hub(config-if) #ip nhrp network-id 10
+Hub(config-if) #ip nhrp holdtime 60
+Hub(config-if) #ip nhrp registration timeout 10
+Hub(config-if) #tunnel source GigabitEthernet0/0
+Hub(config-if) #tunnel mode gre multipoint
+Hub(config-if) #tunnel key 1
+Hub(config-if) #tunnel vrf underlay
 </pre>
 
 
